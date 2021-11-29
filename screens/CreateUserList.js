@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { View, Button, TextInput, ScrollView, StyleSheet } from "react-native";
+import { View, Button, TextInput, ScrollView, StyleSheet,Text } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import Btn from "../components/Btn";
 import firebase from "../firebase";
 
@@ -8,6 +9,8 @@ const CreateUserList = (props) => {
     name: "",
     email: "",
     phone: "",
+    latitude: "",
+    longitude: "",
   };
 
   const [state, setState] = useState(initalState);
@@ -25,9 +28,11 @@ const CreateUserList = (props) => {
           name: state.name,
           email: state.email,
           phone: state.phone,
+          latitude: state.latitude,
+          longitude: state.longitude,
         });
 
-        console.log("test")
+        console.log("test");
         props.navigation.navigate("UsersList");
       } catch (error) {
         console.log(error);
@@ -42,7 +47,7 @@ const CreateUserList = (props) => {
         <TextInput
           placeholder="Name"
           onChangeText={(value) => handleChangeText(value, "name")}
-            value={state.name}
+          value={state.name}
         />
       </View>
 
@@ -53,7 +58,7 @@ const CreateUserList = (props) => {
           multiline={true}
           numberOfLines={4}
           onChangeText={(value) => handleChangeText(value, "email")}
-            value={state.email}
+          value={state.email}
         />
       </View>
 
@@ -62,7 +67,23 @@ const CreateUserList = (props) => {
         <TextInput
           placeholder="Phone"
           onChangeText={(value) => handleChangeText(value, "phone")}
-            value={state.phone}
+          value={state.phone}
+        />
+      </View>
+
+        <Text>Location</Text>
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="latitude"
+          onChangeText={(value) => handleChangeText(value, "latitude")}
+          value={state.latitude}
+        />
+      </View>
+      <View style={styles.inputGroup}>
+        <TextInput
+          placeholder="longitude"
+          onChangeText={(value) => handleChangeText(value, "longitude")}
+          value={state.longitude}
         />
       </View>
 

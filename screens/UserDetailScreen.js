@@ -6,9 +6,13 @@ import {
   Alert,
   ActivityIndicator,
   StyleSheet,
+  Dimensions,
+  Text,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import Btn from "../components/Btn";
+import MapView, { Callout, Circle, Marker } from "react-native-maps";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 import firebase from "../firebase";
 
@@ -18,11 +22,19 @@ const UserDetailScreen = (props) => {
     name: "",
     email: "",
     phone: "",
+    latitude: "",
+    longitude: "",
   };
 
   const [user, setUser] = useState(initialState);
   const [loading, setLoading] = useState(true);
+  console.log(user.longitude);
+  const [pin, setPin] = React.useState({
+    latitude: user.latitude && 19.285013,
+    longitude: user.longitude && -103.7327,
+  });
 
+  pin.longitude;
   const handleTextChange = (value, prop) => {
     setUser({ ...user, [prop]: value });
   };
@@ -65,6 +77,8 @@ const UserDetailScreen = (props) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      latitude: user.latitude,
+      longitude: user.longitude,
     });
     setUser(initialState);
     props.navigation.navigate("UsersList");
@@ -112,8 +126,6 @@ const UserDetailScreen = (props) => {
         />
       </View>
       <View style={styles.btn}>
-
-
         <Btn
           title="Delete"
           onClick={() => openConfirmationAlert()}
@@ -133,6 +145,36 @@ const UserDetailScreen = (props) => {
             // marginBottom: "5%",
           }}
         />
+      </View>
+
+      <View style={{ flex: 1, meginTop: "5%" }}>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: user.latitude,
+            longitude: user.longitude,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
+          // provider="google"
+        >
+          <Marker
+            coordinate={pin}
+            draggable={true}
+            onDragStart={(e) => console.log(e.nativeEvent.coordinate)}
+            onDragEnd={(e) =>
+              setPin({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              })
+            }
+          >
+            <Callout>
+              <Text>{JSON.stringify(pin)}</Text>
+            </Callout>
+          </Marker>
+          <Circle center={pin} radius={1000} />
+        </MapView>
       </View>
     </ScrollView>
   );
@@ -161,6 +203,10 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginBottom: 7,
+  },
+  map: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 });
 
