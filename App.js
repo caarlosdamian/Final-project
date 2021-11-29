@@ -8,6 +8,8 @@ import SignUpScreen from "./screens/SignUp";
 import Test from "./screens/Test";
 import CreateUserList from "./screens/CreateUserList";
 import firebase from "./firebase";
+import UserList from "./screens/UserList";
+import UserDetailScreen from "./screens/UserDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +41,16 @@ function App() {
           <Stack.Screen
             name="AddUser"
             component={CreateUserList}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="UsersList"
+            component={UserList}
+            options={{ headerShown: true }}
+          />
+          <Stack.Screen
+            name="UserDetailScreen"
+            component={UserDetailScreen}
             options={{ headerShown: true }}
           />
         </Stack.Navigator>

@@ -27,7 +27,8 @@ const CreateUserList = (props) => {
           phone: state.phone,
         });
 
-        console.log("guardado")
+        console.log("test")
+        props.navigation.navigate("UsersList");
       } catch (error) {
         console.log(error);
       }
