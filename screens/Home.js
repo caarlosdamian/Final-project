@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 export default function Loginscreen({navigation}) {
     return <View style={styles.view}>
         <Text style={{fontSize: 34, fontWeight: "800", marginBottom: 20}}>Welcome</Text>
+        <Btn onClick={() => navigation.navigate("AddUser")} title="User List" style={{ width: "48%", backgroundColor: "#344669" ,marginBottom:"50"}} />
         <Btn title="Log Out" onClick={() => firebase.auth().signOut()} />
-        <Btn onClick={() => navigation.navigate("Test")} title="Test" style={{ width: "48%", backgroundColor: "#344869" }} />
     </View>
 }
